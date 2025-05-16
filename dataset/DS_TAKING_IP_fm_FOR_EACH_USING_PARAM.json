@@ -1,5 +1,5 @@
 {
-	"name": "DS_TAKING_IP_FM_FOR_EACH_USING_PARAM",
+	"name": "DS_TAKING_IP_fm_FOR_EACH_USING_PARAM",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "linkedservices_ADLS_Gen2",
@@ -7,14 +7,20 @@
 		},
 		"parameters": {
 			"PARAM_OP_FM_IF_COND": {
-				"type": "array"
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation"
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().PARAM_OP_FM_IF_COND",
+					"type": "Expression"
+				},
+				"folderPath": "FILE_LIST_IP_TASK3",
+				"fileSystem": "containerinputfiles"
 			}
 		}
 	}
