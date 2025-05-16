@@ -1430,7 +1430,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "PRESERVE_FILELIST.txt",
+						"folderPath": "COPY_ACTIVITY",
 						"fileSystem": "containerinputfiles"
 					}
 				}
