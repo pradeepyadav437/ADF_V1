@@ -1,0 +1,21 @@
+{
+	"name": "DS_TAKING_IP_FM_FOR_EACH_USING_PARAM",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"PARAM_OP_FM_IF_COND": {
+				"type": "array"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			}
+		}
+	}
+}
