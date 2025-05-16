@@ -1,0 +1,36 @@
+{
+	"name": "DS_PARAM_FILES_CPY_DYN_FLDR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"PARAM_FILENAME": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().PARAM_FILENAME",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('DYNM_',toUpper(split(dataset().PARAM_FILENAME,'.')[1]))",
+					"type": "Expression"
+				},
+				"fileSystem": "containeroutputfiles"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,19 @@
+{
+	"name": "DS_GET_MD_SUBFOLDERS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "FILE_LIST_IP_TASK3/*D*",
+				"fileSystem": "containerinputfiles"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

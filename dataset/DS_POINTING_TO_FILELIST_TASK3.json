@@ -1,0 +1,19 @@
+{
+	"name": "DS_POINTING_TO_FILELIST_TASK3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "FILE_LIST_IP_TASK3",
+				"fileSystem": "containerinputfiles"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

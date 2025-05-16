@@ -1,0 +1,29 @@
+{
+	"name": "DS_FLATTEN_OP_COPY_BEHAVIOUR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "FLATTEN_OP",
+				"fileSystem": "containeroutputfiles"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "hrfi'\tkjj\thbkhb\tbjk",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

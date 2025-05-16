@@ -1,0 +1,19 @@
+{
+	"name": "DS_PRESERVE_OP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "PRESERVE_OP",
+				"fileSystem": "containeroutputfiles"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

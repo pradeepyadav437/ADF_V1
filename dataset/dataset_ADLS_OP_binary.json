@@ -1,0 +1,19 @@
+{
+	"name": "dataset_ADLS_OP_binary",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "PRESERVE",
+				"fileSystem": "containeroutputfiles"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
