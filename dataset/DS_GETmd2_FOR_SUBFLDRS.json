@@ -10,10 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@item().name",
-					"type": "Expression"
-				},
 				"folderPath": "FILE_LIST_IP_TASK3",
 				"fileSystem": "containerinputfiles"
 			}
