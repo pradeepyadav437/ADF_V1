@@ -7,7 +7,7 @@
 		},
 		"parameters": {
 			"PARAM_OP_FM_IF_COND": {
-				"type": "string"
+				"type": "array"
 			}
 		},
 		"annotations": [],
