@@ -864,7 +864,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@contains(item().name,'*.*')",
+											"value": "@contains(item().name,'D')",
 											"type": "Expression"
 										},
 										"ifTrueActivities": [
