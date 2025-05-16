@@ -85,11 +85,29 @@
 													"type": "BinaryReadSettings"
 												}
 											},
+											"sink": {
+												"type": "BinarySink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												}
+											},
 											"enableStaging": false
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_TAKING_IP_FM_FOR_EACH_USING_PARAM",
+												"referenceName": "DS_TAKING_IP_fm_FOR_EACH_USING_PARAM",
+												"type": "DatasetReference",
+												"parameters": {
+													"PARAM_OP_FM_IF_COND": {
+														"value": "@item().NAME",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_FILE_LIST_OP_TASK3",
 												"type": "DatasetReference"
 											}
 										]
