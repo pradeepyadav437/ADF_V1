@@ -141,7 +141,9 @@
 									"referenceName": "DS_GETmd2_FOR_SUBFLDRS",
 									"type": "DatasetReference"
 								},
-								"fieldList": [],
+								"fieldList": [
+									"childItems"
+								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"enablePartitionDiscovery": false
