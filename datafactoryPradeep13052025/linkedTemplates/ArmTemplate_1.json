@@ -864,7 +864,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"expression": {
-											"value": "@equals(item().type,'Folder')",
+											"value": "@equals(item().name,'*.*')",
 											"type": "Expression"
 										},
 										"ifTrueActivities": [
