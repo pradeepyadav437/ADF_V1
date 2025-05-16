@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "PRESERVE_IP",
+				"folderPath": "DIR1",
 				"fileSystem": "containerinputfiles"
 			}
 		}
