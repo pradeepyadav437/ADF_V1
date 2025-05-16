@@ -1,0 +1,22 @@
+{
+	"name": "DS_GETmd2_FOR_SUBFLDRS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@item().name",
+					"type": "Expression"
+				},
+				"folderPath": "FILE_LIST_IP_TASK3",
+				"fileSystem": "containerinputfiles"
+			}
+		}
+	}
+}
