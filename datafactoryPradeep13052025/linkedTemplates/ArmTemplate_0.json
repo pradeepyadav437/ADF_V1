@@ -307,11 +307,20 @@
 					"referenceName": "linkedservices_ADLS_Gen2",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"PARAM_DS_SUBFOLDR_FILELIST": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Binary",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().PARAM_DS_SUBFOLDR_FILELIST",
+							"type": "Expression"
+						},
 						"folderPath": "FILE_LIST_IP_TASK3",
 						"fileSystem": "containerinputfiles"
 					}

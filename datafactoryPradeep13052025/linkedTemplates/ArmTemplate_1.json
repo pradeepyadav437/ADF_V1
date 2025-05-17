@@ -829,7 +829,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Get Metadata1",
+						"name": "GetMD_1",
 						"type": "GetMetadata",
 						"dependsOn": [],
 						"policy": {
@@ -864,7 +864,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Get Metadata1",
+								"activity": "GetMD_1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -873,7 +873,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Get Metadata1').output.childItems",
+								"value": "@activity('GetMD_1').output.childItems",
 								"type": "Expression"
 							},
 							"isSequential": true,
@@ -885,7 +885,7 @@
 									"onInactiveMarkAs": "Succeeded",
 									"dependsOn": [
 										{
-											"activity": "Get Metadata2",
+											"activity": "GetMD_2",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -953,7 +953,7 @@
 									}
 								},
 								{
-									"name": "Get Metadata2",
+									"name": "GetMD_2",
 									"type": "GetMetadata",
 									"dependsOn": [],
 									"policy": {
@@ -968,7 +968,12 @@
 										"dataset": {
 											"referenceName": "DS_GETmd2_FOR_SUBFLDRS",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"PARAM_DS_SUBFOLDR_FILELIST": {
+													"value": "@item().NAME",
+													"type": "Expression"
+												}
+											}
 										},
 										"fieldList": [
 											"childItems"
