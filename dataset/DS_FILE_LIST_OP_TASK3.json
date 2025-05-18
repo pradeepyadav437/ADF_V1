@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "FILE_LIST_OP_TASK3",
-				"fileSystem": "containeroutputfiles"
+				"fileName": "txtfile2.txt",
+				"fileSystem": "containerinputfiles"
 			}
 		}
 	},
