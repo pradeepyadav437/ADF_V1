@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "txtfile2.txt",
 				"fileSystem": "containerinputfiles"
 			}
 		}
