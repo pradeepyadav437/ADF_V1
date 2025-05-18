@@ -588,7 +588,16 @@
 								{
 									"name": "GetMD_2",
 									"type": "GetMetadata",
-									"dependsOn": [],
+									"state": "Inactive",
+									"onInactiveMarkAs": "Succeeded",
+									"dependsOn": [
+										{
+											"activity": "Set variable1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.12:00:00",
 										"retry": 0,
@@ -601,12 +610,7 @@
 										"dataset": {
 											"referenceName": "DS_GETmd2_FOR_SUBFLDRS",
 											"type": "DatasetReference",
-											"parameters": {
-												"PARAM_DS_SUBFOLDR_FILELIST": {
-													"value": "@item().NAME",
-													"type": "Expression"
-												}
-											}
+											"parameters": {}
 										},
 										"fieldList": [
 											"childItems"
@@ -618,6 +622,23 @@
 										},
 										"formatSettings": {
 											"type": "BinaryReadSettings"
+										}
+									}
+								},
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "VAR_ACROSS_PL_TO_GET_SUBFLDRS",
+										"value": {
+											"value": "@item().NAME",
+											"type": "Expression"
 										}
 									}
 								}
