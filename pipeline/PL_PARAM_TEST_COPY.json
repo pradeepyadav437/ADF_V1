@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -79,6 +80,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -120,7 +122,7 @@
 											"source": {
 												"type": "BinarySource",
 												"storeSettings": {
-													"type": "AzureBlobFSReadSettings",
+													"type": "AzureBlobStorageReadSettings",
 													"recursive": true
 												},
 												"formatSettings": {
@@ -137,14 +139,8 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_IP_PARAM_NESTED_GMD2_CPY",
-												"type": "DatasetReference",
-												"parameters": {
-													"PARAM_DS_FILENAME": {
-														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
-														"type": "Expression"
-													}
-												}
+												"referenceName": "DS_BLOB_IP_FILES",
+												"type": "DatasetReference"
 											}
 										],
 										"outputs": [
