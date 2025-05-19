@@ -5,11 +5,20 @@
 			"referenceName": "linkedservices_ADLS_Gen2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"PARAM_DS_FILENAME": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().PARAM_DS_FILENAME",
+					"type": "Expression"
+				},
 				"folderPath": "FILE_LIST_IP",
 				"fileSystem": "containerinputfiles"
 			}
