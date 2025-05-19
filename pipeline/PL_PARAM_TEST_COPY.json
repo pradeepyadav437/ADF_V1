@@ -100,7 +100,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,variables('VAR_FILE_SIZE_LIMIT'))",
+									"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,pipeline().parameters.VAR_FILE_SIZE_LIMIT)",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -161,9 +161,9 @@
 				}
 			}
 		],
-		"variables": {
+		"parameters": {
 			"VAR_FILE_SIZE_LIMIT": {
-				"type": "Integer"
+				"type": "int"
 			}
 		},
 		"annotations": []
