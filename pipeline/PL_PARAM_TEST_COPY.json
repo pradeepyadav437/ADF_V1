@@ -99,7 +99,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,variables('VAR_FILE_SIZE'))",
+									"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,variables('VAR_FILE_SIZE_LIMIT'))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -140,7 +140,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"PARAM_DS_FILENAME": {
-														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
+														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.size",
 														"type": "Expression"
 													}
 												}
@@ -161,8 +161,8 @@
 			}
 		],
 		"variables": {
-			"VAR_FILE_SIZE": {
-				"type": "String"
+			"VAR_FILE_SIZE_LIMIT": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
