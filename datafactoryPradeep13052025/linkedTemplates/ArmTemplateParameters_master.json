@@ -8,6 +8,9 @@
 		"linkedservices_ADLS_Gen2_accountKey": {
 			"value": ""
 		},
+		"LINKEDSERVICE_BLOB_connectionString": {
+			"value": ""
+		},
 		"linkedservices_ADLS_Gen2_properties_typeProperties_url": {
 			"value": "https://storageaccountpradeep.dfs.core.windows.net/"
 		},

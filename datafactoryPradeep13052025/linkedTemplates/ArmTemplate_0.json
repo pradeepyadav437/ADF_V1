@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'linkedservices_ADLS_Gen2'"
 		},
+		"LINKEDSERVICE_BLOB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LINKEDSERVICE_BLOB'"
+		},
 		"linkedservices_ADLS_Gen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageaccountpradeep.dfs.core.windows.net/"
@@ -33,6 +37,19 @@
 						"type": "SecureString",
 						"value": "[parameters('linkedservices_ADLS_Gen2_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LINKEDSERVICE_BLOB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LINKEDSERVICE_BLOB_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -200,8 +217,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "FILE_LIST_OP_TASK3",
-						"fileSystem": "containeroutputfiles"
+						"fileSystem": "containerinputfiles"
 					}
 				}
 			},
@@ -579,29 +595,6 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"folderPath": "FILE_LIST_IP_TASK3",
-						"fileSystem": "containerinputfiles"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_PRESERVE_IP')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "linkedservices_ADLS_Gen2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "COPY_ACTIVITY",
 						"fileSystem": "containerinputfiles"
 					}
 				}
