@@ -19,7 +19,6 @@
 					"value": "@dataset().PARAM_DS_FILENAME",
 					"type": "Expression"
 				},
-				"folderPath": "FILE_LIST_IP",
 				"fileSystem": "containerinputfiles"
 			}
 		}

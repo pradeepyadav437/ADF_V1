@@ -74,7 +74,8 @@
 									}
 								},
 								"fieldList": [
-									"size"
+									"size",
+									"itemName"
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
@@ -140,7 +141,7 @@
 												"type": "DatasetReference",
 												"parameters": {
 													"PARAM_DS_FILENAME": {
-														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.size",
+														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
 														"type": "Expression"
 													}
 												}
