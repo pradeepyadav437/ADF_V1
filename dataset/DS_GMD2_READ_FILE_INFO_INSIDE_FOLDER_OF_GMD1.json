@@ -1,0 +1,27 @@
+{
+	"name": "DS_GMD2_READ_FILE_INFO_INSIDE_FOLDER_OF_GMD1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"PARAM_FILENAMES": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().PARAM_FILENAMES",
+					"type": "Expression"
+				},
+				"folderPath": "FILE_LIST_IP",
+				"fileSystem": "containerinputfiles"
+			}
+		}
+	}
+}
