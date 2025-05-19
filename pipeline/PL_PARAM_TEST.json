@@ -1,6 +1,21 @@
 {
 	"name": "PL_PARAM_TEST",
 	"properties": {
+		"activities": [
+			{
+				"name": "GMD_ALL_FILES",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
 		"annotations": []
 	}
 }
