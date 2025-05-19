@@ -5,10 +5,10 @@
 		"factoryName": {
 			"value": "datafactoryPradeep13052025"
 		},
-		"linkedservices_ADLS_Gen2_accountKey": {
+		"LINKEDSERVICE_BLOB_connectionString": {
 			"value": ""
 		},
-		"LINKEDSERVICE_BLOB_connectionString": {
+		"linkedservices_ADLS_Gen2_accountKey": {
 			"value": ""
 		},
 		"linkedservices_ADLS_Gen2_properties_typeProperties_url": {
