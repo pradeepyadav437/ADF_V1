@@ -65,10 +65,16 @@
 							"typeProperties": {
 								"dataset": {
 									"referenceName": "DS_BLOB_IP_CONTAINER",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"PARAM_FILES_FM_FOREACH_ITERATION": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
 								},
 								"fieldList": [
-									"childItems"
+									"size"
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
@@ -82,8 +88,6 @@
 						{
 							"name": "If Condition1",
 							"type": "IfCondition",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "NESTED_GMD_2_FILE_SIZE",
@@ -95,7 +99,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@less(activity('NESTED_GMD_2_FILE_SIZE').output.size,54)",
+									"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,variables('VAR_FILE_SIZE'))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [

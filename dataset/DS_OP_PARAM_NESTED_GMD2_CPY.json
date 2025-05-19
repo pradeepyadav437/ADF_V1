@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "FILE_LIST_OP/FILES_LESS_THAN_54",
+				"folderPath": "FILE_LIST_OP/FILES_GREATER_THAN_45",
 				"fileSystem": "containeroutputfiles"
 			}
 		}

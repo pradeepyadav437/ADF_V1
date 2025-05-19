@@ -15,6 +15,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().PARAM_FILES_FM_FOREACH_ITERATION",
+					"type": "Expression"
+				},
 				"container": "inputcontainerblob"
 			}
 		}
