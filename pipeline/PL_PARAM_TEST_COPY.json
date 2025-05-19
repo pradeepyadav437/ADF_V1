@@ -64,21 +64,14 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "DS_GMD2_READ_FILE_INFO_INSIDE_FOLDER_OF_GMD1",
-									"type": "DatasetReference",
-									"parameters": {
-										"PARAM_FILENAMES": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "DS_BLOB_IP_CONTAINER",
+									"type": "DatasetReference"
 								},
 								"fieldList": [
-									"size",
-									"itemName"
+									"childItems"
 								],
 								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
+									"type": "AzureBlobStorageReadSettings",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -89,6 +82,8 @@
 						{
 							"name": "If Condition1",
 							"type": "IfCondition",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "NESTED_GMD_2_FILE_SIZE",

@@ -1,0 +1,17 @@
+{
+	"name": "DS_BLOB_IP_CONTAINER",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LINKEDSERVICE_BLOB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "inputcontainerblob"
+			}
+		}
+	}
+}
