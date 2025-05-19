@@ -16,18 +16,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_FILE_LIST_IP",
+						"referenceName": "DS_BLOB_CONTAINER",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
 					],
 					"storeSettings": {
-						"type": "AzureBlobFSReadSettings",
+						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
+						"type": "BinaryReadSettings"
 					}
 				}
 			},
@@ -156,6 +156,11 @@
 				}
 			}
 		],
+		"variables": {
+			"VAR_FILE_SIZE": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }

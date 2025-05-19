@@ -1,14 +1,9 @@
 {
-	"name": "DS_BLOB_IP_CONTAINER",
+	"name": "DS_BLOB_CONTAINER",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LINKEDSERVICE_BLOB",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"PARAM_FILES_FM_FOREACH_ITERATION": {
-				"type": "string"
-			}
 		},
 		"annotations": [],
 		"type": "Binary",
