@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"PARAM_FILENAME": {
+			"PARAM_DS2_FILENAMES": {
 				"type": "string"
 			}
 		},
