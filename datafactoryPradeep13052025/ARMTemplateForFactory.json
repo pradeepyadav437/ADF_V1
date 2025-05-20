@@ -1212,7 +1212,7 @@
 													"source": {
 														"type": "BinarySource",
 														"storeSettings": {
-															"type": "AzureBlobFSReadSettings",
+															"type": "AzureBlobStorageReadSettings",
 															"recursive": true
 														},
 														"formatSettings": {
@@ -1229,10 +1229,10 @@
 												},
 												"inputs": [
 													{
-														"referenceName": "DS_IP_PARAM_NESTED_GMD2_CPY",
+														"referenceName": "DS_BLOB_IP_FILES",
 														"type": "DatasetReference",
 														"parameters": {
-															"PARAM_DS_FILENAME": {
+															"PARAM_DS2_FILENAMES": {
 																"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
 																"type": "Expression"
 															}
@@ -1267,7 +1267,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_BLOB_CONTAINER')]",
 				"[concat(variables('factoryId'), '/datasets/DS_BLOB_IP_CONTAINER')]",
-				"[concat(variables('factoryId'), '/datasets/DS_IP_PARAM_NESTED_GMD2_CPY')]",
+				"[concat(variables('factoryId'), '/datasets/DS_BLOB_IP_FILES')]",
 				"[concat(variables('factoryId'), '/datasets/DS_OP_PARAM_NESTED_GMD2_CPY')]"
 			]
 		},
@@ -1523,6 +1523,33 @@
 							"value": "@dataset().PARAM_FILES_FM_FOREACH_ITERATION",
 							"type": "Expression"
 						},
+						"container": "inputcontainerblob"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LINKEDSERVICE_BLOB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_BLOB_IP_FILES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LINKEDSERVICE_BLOB",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"PARAM_DS2_FILENAMES": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
 						"container": "inputcontainerblob"
 					}
 				}
