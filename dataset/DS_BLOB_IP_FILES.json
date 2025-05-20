@@ -5,6 +5,11 @@
 			"referenceName": "LINKEDSERVICE_BLOB",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"PARAM_FILENAME": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
