@@ -1060,7 +1060,7 @@
 												],
 												"outputs": [
 													{
-														"referenceName": "DS_OP_PARAM_NESTED_GMD2_CPY",
+														"referenceName": "DS__TRUE_OP_PARAM_NESTED_GMD2_CPY",
 														"type": "DatasetReference",
 														"parameters": {}
 													}
@@ -1082,7 +1082,7 @@
 				"[concat(variables('factoryId'), '/datasets/DS_FILE_LIST_IP')]",
 				"[concat(variables('factoryId'), '/datasets/DS_GMD2_READ_FILE_INFO_INSIDE_FOLDER_OF_GMD1')]",
 				"[concat(variables('factoryId'), '/datasets/DS_IP_PARAM_NESTED_GMD2_CPY')]",
-				"[concat(variables('factoryId'), '/datasets/DS_OP_PARAM_NESTED_GMD2_CPY')]"
+				"[concat(variables('factoryId'), '/datasets/DS__TRUE_OP_PARAM_NESTED_GMD2_CPY')]"
 			]
 		},
 		{
@@ -1241,7 +1241,7 @@
 												],
 												"outputs": [
 													{
-														"referenceName": "DS_OP_PARAM_NESTED_GMD2_CPY",
+														"referenceName": "DS__TRUE_OP_PARAM_NESTED_GMD2_CPY",
 														"type": "DatasetReference",
 														"parameters": {}
 													}
@@ -1268,7 +1268,247 @@
 				"[concat(variables('factoryId'), '/datasets/DS_BLOB_CONTAINER')]",
 				"[concat(variables('factoryId'), '/datasets/DS_BLOB_IP_CONTAINER')]",
 				"[concat(variables('factoryId'), '/datasets/DS_BLOB_IP_FILES')]",
-				"[concat(variables('factoryId'), '/datasets/DS_OP_PARAM_NESTED_GMD2_CPY')]"
+				"[concat(variables('factoryId'), '/datasets/DS__TRUE_OP_PARAM_NESTED_GMD2_CPY')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_PARAM_TEST_COPY_DYNAMIC_FLDRS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "GMD_ALL_FILES",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "DS_BLOB_CONTAINER",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "BinaryReadSettings"
+							}
+						}
+					},
+					{
+						"name": "ForEach_FILE",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "GMD_ALL_FILES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('GMD_ALL_FILES').output.childItems",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "NESTED_GMD_2_FILE_SIZE",
+									"type": "GetMetadata",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "DS_BLOB_IP_CONTAINER",
+											"type": "DatasetReference",
+											"parameters": {
+												"PARAM_FILES_FM_FOREACH_ITERATION": {
+													"value": "@item().name",
+													"type": "Expression"
+												}
+											}
+										},
+										"fieldList": [
+											"size",
+											"itemName"
+										],
+										"storeSettings": {
+											"type": "AzureBlobStorageReadSettings",
+											"recursive": true,
+											"enablePartitionDiscovery": false
+										},
+										"formatSettings": {
+											"type": "BinaryReadSettings"
+										}
+									}
+								},
+								{
+									"name": "If Condition1",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "NESTED_GMD_2_FILE_SIZE",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,pipeline().parameters.VAR_FILE_SIZE_LIMIT)",
+											"type": "Expression"
+										},
+										"ifFalseActivities": [
+											{
+												"name": "COPY_DATA_ACTIVITY_FAIL",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "BinarySource",
+														"storeSettings": {
+															"type": "AzureBlobStorageReadSettings",
+															"recursive": true
+														},
+														"formatSettings": {
+															"type": "BinaryReadSettings"
+														}
+													},
+													"sink": {
+														"type": "BinarySink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														}
+													},
+													"enableStaging": false
+												},
+												"inputs": [
+													{
+														"referenceName": "DS_BLOB_IP_FILES",
+														"type": "DatasetReference",
+														"parameters": {
+															"PARAM_DS2_FILENAMES": {
+																"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "DS_FAIL_OP_PARAM_NESTED_GMD2_CPY",
+														"type": "DatasetReference",
+														"parameters": {}
+													}
+												]
+											}
+										],
+										"ifTrueActivities": [
+											{
+												"name": "Copy data1",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "BinarySource",
+														"storeSettings": {
+															"type": "AzureBlobStorageReadSettings",
+															"recursive": true
+														},
+														"formatSettings": {
+															"type": "BinaryReadSettings"
+														}
+													},
+													"sink": {
+														"type": "BinarySink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														}
+													},
+													"enableStaging": false
+												},
+												"inputs": [
+													{
+														"referenceName": "DS_BLOB_IP_FILES",
+														"type": "DatasetReference",
+														"parameters": {
+															"PARAM_DS2_FILENAMES": {
+																"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "DS__TRUE_OP_PARAM_NESTED_GMD2_CPY",
+														"type": "DatasetReference",
+														"parameters": {}
+													}
+												]
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"VAR_FILE_SIZE_LIMIT": {
+						"type": "int"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_BLOB_CONTAINER')]",
+				"[concat(variables('factoryId'), '/datasets/DS_BLOB_IP_CONTAINER')]",
+				"[concat(variables('factoryId'), '/datasets/DS_BLOB_IP_FILES')]",
+				"[concat(variables('factoryId'), '/datasets/DS_FAIL_OP_PARAM_NESTED_GMD2_CPY')]",
+				"[concat(variables('factoryId'), '/datasets/DS__TRUE_OP_PARAM_NESTED_GMD2_CPY')]"
 			]
 		},
 		{
@@ -1550,12 +1790,39 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().PARAM_DS2_FILENAMES",
+							"type": "Expression"
+						},
 						"container": "inputcontainerblob"
 					}
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LINKEDSERVICE_BLOB')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_FAIL_OP_PARAM_NESTED_GMD2_CPY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservices_ADLS_Gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "FILE_LIST_OP/FILE_LIST_FAIL_CASE",
+						"fileSystem": "containeroutputfiles"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
 			]
 		},
 		{
@@ -2030,29 +2297,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_OP_PARAM_NESTED_GMD2_CPY')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "linkedservices_ADLS_Gen2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "FILE_LIST_OP/FILES_GREATER_THAN_45",
-						"fileSystem": "containeroutputfiles"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DS_PARAM_FILES_CPY_DYN_FLDR')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2264,6 +2508,29 @@
 						},
 						"folderPath": "FILE_LIST_IP_TASK3",
 						"fileSystem": "containerinputfiles"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS__TRUE_OP_PARAM_NESTED_GMD2_CPY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservices_ADLS_Gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "FILE_LIST_OP/FILES_GREATER_THAN_45",
+						"fileSystem": "containeroutputfiles"
 					}
 				}
 			},
