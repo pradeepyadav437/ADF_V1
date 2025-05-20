@@ -1,0 +1,18 @@
+{
+	"name": "LS_PRADEEP_2_ADF_STORAGE_KEYVAULT",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://storageaccountpradeep.dfs.core.windows.net/",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_PRADEEP_ADF_TO_LINKED_SERVCIE",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "ACCOUNT-KEY"
+			}
+		}
+	}
+}
