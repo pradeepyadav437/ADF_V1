@@ -142,7 +142,7 @@
 												"referenceName": "DS_BLOB_IP_FILES",
 												"type": "DatasetReference",
 												"parameters": {
-													"PARAM_FILENAME": {
+													"PARAM_DS2_FILENAMES": {
 														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
 														"type": "Expression"
 													}
