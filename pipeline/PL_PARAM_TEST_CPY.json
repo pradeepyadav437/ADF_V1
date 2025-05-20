@@ -1,5 +1,5 @@
 {
-	"name": "PL_PARAM_TEST_COPY",
+	"name": "PL_PARAM_TEST_CPY_DYNAMIC_FLDRS",
 	"properties": {
 		"activities": [
 			{
@@ -105,6 +105,58 @@
 									"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,pipeline().parameters.VAR_FILE_SIZE_LIMIT)",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "COPY_DATA_ACTIVITY_FAIL",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "BinarySource",
+												"storeSettings": {
+													"type": "AzureBlobStorageReadSettings",
+													"recursive": true
+												},
+												"formatSettings": {
+													"type": "BinaryReadSettings"
+												}
+											},
+											"sink": {
+												"type": "BinarySink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												}
+											},
+											"enableStaging": false
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_BLOB_IP_FILES",
+												"type": "DatasetReference",
+												"parameters": {
+													"PARAM_DS2_FILENAMES": {
+														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_FAIL_OP_PARAM_NESTED_GMD2_CPY",
+												"type": "DatasetReference"
+											}
+										]
+									}
+								],
 								"ifTrueActivities": [
 									{
 										"name": "Copy data1",
