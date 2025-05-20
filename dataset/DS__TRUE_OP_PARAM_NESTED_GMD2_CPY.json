@@ -1,5 +1,5 @@
 {
-	"name": "DS_OP_PARAM_NESTED_GMD2_CPY",
+	"name": "DS__TRUE_OP_PARAM_NESTED_GMD2_CPY",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "linkedservices_ADLS_Gen2",
