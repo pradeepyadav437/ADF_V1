@@ -1,0 +1,10 @@
+{
+	"name": "LS_PRADEEP_2_STORAGE_KEYVAULT",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://KeyVault-2-Pradeep.vault.azure.net/"
+		}
+	}
+}
