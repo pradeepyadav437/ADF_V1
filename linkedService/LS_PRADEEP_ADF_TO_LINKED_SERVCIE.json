@@ -1,0 +1,10 @@
+{
+	"name": "LS_PRADEEP_ADF_TO_LINKED_SERVCIE",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://KeyVaultPradeep.vault.azure.net/"
+		}
+	}
+}
