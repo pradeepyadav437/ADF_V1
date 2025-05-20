@@ -1,5 +1,5 @@
 {
-	"name": "PL_PARAM_TEST",
+	"name": "PL_PARAM_TEST_COPY_DYNAMIC_FLDRS",
 	"properties": {
 		"activities": [
 			{
@@ -16,19 +16,19 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_FILE_LIST_IP",
+						"referenceName": "DS_BLOB_CONTAINER",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
 					],
 					"storeSettings": {
-						"type": "AzureBlobFSReadSettings",
+						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
+						"type": "BinaryReadSettings"
 					}
 				}
 			},
@@ -65,10 +65,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "DS_GMD2_READ_FILE_INFO_INSIDE_FOLDER_OF_GMD1",
+									"referenceName": "DS_BLOB_IP_CONTAINER",
 									"type": "DatasetReference",
 									"parameters": {
-										"PARAM_FILENAMES": {
+										"PARAM_FILES_FM_FOREACH_ITERATION": {
 											"value": "@item().name",
 											"type": "Expression"
 										}
@@ -79,7 +79,7 @@
 									"itemName"
 								],
 								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
+									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
@@ -102,9 +102,61 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@less(activity('NESTED_GMD_2_FILE_SIZE').output.size,54)",
+									"value": "@greater(activity('NESTED_GMD_2_FILE_SIZE').output.size,pipeline().parameters.VAR_FILE_SIZE_LIMIT)",
 									"type": "Expression"
 								},
+								"ifFalseActivities": [
+									{
+										"name": "COPY_DATA_ACTIVITY_FAIL",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "0.12:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "BinarySource",
+												"storeSettings": {
+													"type": "AzureBlobStorageReadSettings",
+													"recursive": true
+												},
+												"formatSettings": {
+													"type": "BinaryReadSettings"
+												}
+											},
+											"sink": {
+												"type": "BinarySink",
+												"storeSettings": {
+													"type": "AzureBlobFSWriteSettings"
+												}
+											},
+											"enableStaging": false
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_BLOB_IP_FILES",
+												"type": "DatasetReference",
+												"parameters": {
+													"PARAM_DS2_FILENAMES": {
+														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_FAIL_OP_PARAM_NESTED_GMD2_CPY",
+												"type": "DatasetReference"
+											}
+										]
+									}
+								],
 								"ifTrueActivities": [
 									{
 										"name": "Copy data1",
@@ -122,7 +174,7 @@
 											"source": {
 												"type": "BinarySource",
 												"storeSettings": {
-													"type": "AzureBlobFSReadSettings",
+													"type": "AzureBlobStorageReadSettings",
 													"recursive": true
 												},
 												"formatSettings": {
@@ -139,10 +191,10 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_IP_PARAM_NESTED_GMD2_CPY",
+												"referenceName": "DS_BLOB_IP_FILES",
 												"type": "DatasetReference",
 												"parameters": {
-													"PARAM_DS_FILENAME": {
+													"PARAM_DS2_FILENAMES": {
 														"value": "@activity('NESTED_GMD_2_FILE_SIZE').output.itemName",
 														"type": "Expression"
 													}
@@ -163,6 +215,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"VAR_FILE_SIZE_LIMIT": {
+				"type": "int"
+			}
+		},
 		"annotations": []
 	}
 }

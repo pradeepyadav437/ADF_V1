@@ -151,7 +151,7 @@
 										],
 										"outputs": [
 											{
-												"referenceName": "DS_OP_PARAM_NESTED_GMD2_CPY",
+												"referenceName": "DS__TRUE_OP_PARAM_NESTED_GMD2_CPY",
 												"type": "DatasetReference"
 											}
 										]
