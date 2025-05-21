@@ -1,0 +1,23 @@
+{
+	"name": "AzureSqlDatabase1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "sqlserver-pradeep.database.windows.net",
+			"database": "DB_SQLSERVER_PRADEEP",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "pradeepyadav437",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_PRADEEP_ADF_TO_LINKED_SERVCIE",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "SQLPassword"
+			}
+		}
+	}
+}
