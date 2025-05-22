@@ -1,0 +1,16 @@
+{
+	"name": "DS_RENAMED_EMP_TABLE_CLMNS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "",
+			"table": "RENAMED_EMP_COLUMNS"
+		}
+	}
+}
