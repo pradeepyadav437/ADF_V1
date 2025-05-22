@@ -1,0 +1,16 @@
+{
+	"name": "DS_AzureSqlTable_AUTO_CREATE_EMP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "",
+			"table": "EMPLOYEE_2"
+		}
+	}
+}
