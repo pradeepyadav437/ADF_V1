@@ -15,6 +15,34 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'linkedservices_ADLS_Gen2'"
 		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sqlserver-pradeep.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "DB_SQLSERVER_PRADEEP"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "pradeepyadav437"
+		},
+		"LS_PRADEEP_2_ADF_STORAGE_KEYVAULT_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageaccountpradeep.dfs.core.windows.net/"
+		},
+		"LS_PRADEEP_2_STORAGE_KEYVAULT_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://KeyVault-2-Pradeep.vault.azure.net/"
+		},
+		"LS_PRADEEP_ADF_TO_LINKED_SERVCIE_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://KeyVaultPradeep.vault.azure.net/"
+		},
+		"LS_PRADEEP_KEYVAULT_TO_ADF_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageaccountpradeep.dfs.core.windows.net"
+		},
 		"linkedservices_ADLS_Gen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageaccountpradeep.dfs.core.windows.net/"
@@ -51,6 +79,12 @@
 					},
 					"linkedservices_ADLS_Gen2_accountKey": {
 						"value": "[parameters('linkedservices_ADLS_Gen2_accountKey')]"
+					},
+					"LS_PRADEEP_2_STORAGE_KEYVAULT_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_PRADEEP_2_STORAGE_KEYVAULT_properties_typeProperties_baseUrl')]"
+					},
+					"LS_PRADEEP_ADF_TO_LINKED_SERVCIE_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_PRADEEP_ADF_TO_LINKED_SERVCIE_properties_typeProperties_baseUrl')]"
 					},
 					"linkedservices_ADLS_Gen2_properties_typeProperties_url": {
 						"value": "[parameters('linkedservices_ADLS_Gen2_properties_typeProperties_url')]"
@@ -92,11 +126,46 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"LS_PRADEEP_2_ADF_STORAGE_KEYVAULT_properties_typeProperties_url": {
+						"value": "[parameters('LS_PRADEEP_2_ADF_STORAGE_KEYVAULT_properties_typeProperties_url')]"
+					},
+					"LS_PRADEEP_KEYVAULT_TO_ADF_properties_typeProperties_url": {
+						"value": "[parameters('LS_PRADEEP_KEYVAULT_TO_ADF_properties_typeProperties_url')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'datafactoryPradeep13052025_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "datafactoryPradeep13052025_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'datafactoryPradeep13052025_ArmTemplate_2')]"
 			]
 		}
 	]

@@ -11,6 +11,27 @@
 		"linkedservices_ADLS_Gen2_accountKey": {
 			"value": ""
 		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "sqlserver-pradeep.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "DB_SQLSERVER_PRADEEP"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "pradeepyadav437"
+		},
+		"LS_PRADEEP_2_ADF_STORAGE_KEYVAULT_properties_typeProperties_url": {
+			"value": "https://storageaccountpradeep.dfs.core.windows.net/"
+		},
+		"LS_PRADEEP_2_STORAGE_KEYVAULT_properties_typeProperties_baseUrl": {
+			"value": "https://KeyVault-2-Pradeep.vault.azure.net/"
+		},
+		"LS_PRADEEP_ADF_TO_LINKED_SERVCIE_properties_typeProperties_baseUrl": {
+			"value": "https://KeyVaultPradeep.vault.azure.net/"
+		},
+		"LS_PRADEEP_KEYVAULT_TO_ADF_properties_typeProperties_url": {
+			"value": "https://storageaccountpradeep.dfs.core.windows.net"
+		},
 		"linkedservices_ADLS_Gen2_properties_typeProperties_url": {
 			"value": "https://storageaccountpradeep.dfs.core.windows.net/"
 		},
