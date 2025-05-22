@@ -5,6 +5,11 @@
 			"referenceName": "linkedservices_ADLS_Gen2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"param_FILENAMES": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
