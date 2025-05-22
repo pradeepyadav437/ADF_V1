@@ -19,7 +19,9 @@
 						"referenceName": "DS_POINTING_TO_FILELIST_TASK3",
 						"type": "DatasetReference"
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
 						"enablePartitionDiscovery": false
