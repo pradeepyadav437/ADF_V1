@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"param_FILENAMES": {
+			"param_FLDR_NAMES_FM_PARENT_PL": {
 				"type": "string"
 			}
 		},
