@@ -93,6 +93,83 @@
 								"type": "BinaryReadSettings"
 							}
 						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "GMD_filenames",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('GMD_filenames').output.childItems",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "BinarySource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
+											}
+										},
+										"sink": {
+											"type": "BinarySink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											}
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "DS_CHILD_PL_COPY_ACT",
+											"type": "DatasetReference",
+											"parameters": {
+												"param_FILENAME": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"param_FLDR_NAME": {
+													"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DS_OP_SUBFOLDER_FILES_COPY",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
+						}
 					}
 				],
 				"policy": {
@@ -106,7 +183,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_POINTING_TO_FILELIST_TASK3')]"
+				"[concat(variables('factoryId'), '/datasets/DS_POINTING_TO_FILELIST_TASK3')]",
+				"[concat(variables('factoryId'), '/datasets/DS_CHILD_PL_COPY_ACT')]",
+				"[concat(variables('factoryId'), '/datasets/DS_OP_SUBFOLDER_FILES_COPY')]"
 			]
 		},
 		{
@@ -588,6 +667,11 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"param_GET_SUB_FLDR_NAMES": {
+						"type": "string"
+					}
 				},
 				"variables": {
 					"VAR_ACROSS_PL_TO_GET_SUBFLDRS": {
@@ -2015,6 +2099,37 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_CHILD_PL_COPY_ACT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservices_ADLS_Gen2",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"param_FILENAME": {
+						"type": "string"
+					},
+					"param_FLDR_NAME": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "FILE_LIST_IP_TASK3",
+						"fileSystem": "containerinputfiles"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_FAIL_OP_PARAM_NESTED_GMD2_CPY')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2200,6 +2315,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"folderPath": "FILES_FM_SUBFOLDER",
 						"fileSystem": "containerinputfiles"
 					}
 				}
@@ -2645,6 +2761,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().param_FLDR_NAMES_FM_PARENT_PL",
+							"type": "Expression"
+						},
 						"folderPath": "FILE_LIST_IP_TASK3",
 						"fileSystem": "containerinputfiles"
 					}
@@ -3313,6 +3433,29 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_OP_SUBFOLDER_FILES_COPY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservices_ADLS_Gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "SUBFOLDER_FILES",
+						"fileSystem": "containeroutputfiles"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
+			]
 		}
 	]
 }
