@@ -177,7 +177,8 @@
 				},
 				"parameters": {
 					"param_IN_CHILD_PL_FOR_FLDRS": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "1"
 					}
 				},
 				"annotations": []
@@ -667,11 +668,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"param_GET_SUB_FLDR_NAMES": {
-						"type": "string"
-					}
 				},
 				"variables": {
 					"VAR_ACROSS_PL_TO_GET_SUBFLDRS": {
@@ -2625,6 +2621,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_OP_SUBFOLDER_FILES_COPY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservices_ADLS_Gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "SUBFOLDER_FILES",
+						"fileSystem": "containeroutputfiles"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_PARAM_FILES_CPY_DYN_FLDR')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2761,10 +2780,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().param_FLDR_NAMES_FM_PARENT_PL",
-							"type": "Expression"
-						},
 						"folderPath": "FILE_LIST_IP_TASK3",
 						"fileSystem": "containerinputfiles"
 					}
@@ -3433,29 +3448,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_OP_SUBFOLDER_FILES_COPY')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "linkedservices_ADLS_Gen2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "SUBFOLDER_FILES",
-						"fileSystem": "containeroutputfiles"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
-			]
 		}
 	]
 }
