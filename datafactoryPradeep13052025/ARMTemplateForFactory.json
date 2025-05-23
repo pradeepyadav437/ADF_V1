@@ -177,7 +177,8 @@
 				},
 				"parameters": {
 					"param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "0"
 					}
 				},
 				"annotations": []
@@ -654,7 +655,7 @@
 										},
 										"waitOnCompletion": true,
 										"parameters": {
-											"param_IN_CHILD_PL_FOR_FLDRS": {
+											"param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS": {
 												"value": "@item().name",
 												"type": "Expression"
 											}
