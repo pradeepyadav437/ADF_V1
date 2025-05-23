@@ -75,8 +75,8 @@
 								"referenceName": "DS_POINTING_TO_FILELIST_TASK3",
 								"type": "DatasetReference",
 								"parameters": {
-									"param_FLDR_NAMES_FM_PARENT_PL": {
-										"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
+									"param__DS_LEVEL_FLDR_NAMES_FM_PARENT_PL": {
+										"value": "@pipeline().parameters.param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS",
 										"type": "Expression"
 									}
 								}
@@ -108,7 +108,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('GMD_filenames').output.childItems",
+								"value": "@activity('GMD_filenames').output.itemName",
 								"type": "Expression"
 							},
 							"isSequential": true,
@@ -154,7 +154,7 @@
 													"type": "Expression"
 												},
 												"param_FLDR_NAME": {
-													"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
+													"value": "@pipeline().parameters.param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS",
 													"type": "Expression"
 												}
 											}
@@ -176,7 +176,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"parameters": {
-					"param_IN_CHILD_PL_FOR_FLDRS": {
+					"param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS": {
 						"type": "string"
 					}
 				},
@@ -603,7 +603,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataset": {
-								"referenceName": "DS_FILE_LIST_IP_TASK3",
+								"referenceName": "DS_PARENT_PL_GMD1_GET_FLDRS",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
@@ -676,7 +676,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_FILE_LIST_IP_TASK3')]",
+				"[concat(variables('factoryId'), '/datasets/DS_PARENT_PL_GMD1_GET_FLDRS')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_CHILD_GETSUBFLDR_FILES')]"
 			]
 		},
@@ -2760,6 +2760,28 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_PARENT_PL_GMD1_GET_FLDRS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservices_ADLS_Gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "containerinputfiles"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedservices_ADLS_Gen2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_POINTING_TO_FILELIST_TASK3')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2769,7 +2791,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"param_FLDR_NAMES_FM_PARENT_PL": {
+					"param__DS_LEVEL_FLDR_NAMES_FM_PARENT_PL": {
 						"type": "string"
 					}
 				},
@@ -2779,7 +2801,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"folderPath": {
-							"value": "FILE_LIST_IP_TASK3/@dataset().param_FLDR_NAMES_FM_PARENT_PL",
+							"value": "@dataset().param__DS_LEVEL_FLDR_NAMES_FM_PARENT_PL",
 							"type": "Expression"
 						},
 						"fileSystem": "containerinputfiles"

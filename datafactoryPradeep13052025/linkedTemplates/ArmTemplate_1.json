@@ -283,6 +283,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_PARENT_PL_GMD1_GET_FLDRS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedservices_ADLS_Gen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "containerinputfiles"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_POINTING_TO_FILELIST_TASK3')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -292,7 +312,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"param_FLDR_NAMES_FM_PARENT_PL": {
+					"param__DS_LEVEL_FLDR_NAMES_FM_PARENT_PL": {
 						"type": "string"
 					}
 				},
@@ -302,7 +322,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"folderPath": {
-							"value": "FILE_LIST_IP_TASK3/@dataset().param_FLDR_NAMES_FM_PARENT_PL",
+							"value": "@dataset().param__DS_LEVEL_FLDR_NAMES_FM_PARENT_PL",
 							"type": "Expression"
 						},
 						"fileSystem": "containerinputfiles"
@@ -558,44 +578,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "linkedservices_ADLS_Gen2",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"Filename": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().Filename",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@split(dataset().Filename,'.')[1]",
-							"type": "Expression"
-						},
-						"fileSystem": "containeroutputfiles"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
 			},
 			"dependsOn": []
 		}
