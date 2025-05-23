@@ -39,6 +39,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"param_FLDR_NAMES_FM_PARENT_PL": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
