@@ -15,6 +15,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().param_FLDR_NAMES_FM_PARENT_PL",
+					"type": "Expression"
+				},
 				"folderPath": "FILE_LIST_IP_TASK3",
 				"fileSystem": "containerinputfiles"
 			}
