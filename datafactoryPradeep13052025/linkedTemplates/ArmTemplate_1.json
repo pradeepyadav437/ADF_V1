@@ -301,6 +301,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"folderPath": {
+							"value": "@dataset().param_FLDR_NAMES_FM_PARENT_PL",
+							"type": "Expression"
+						},
 						"fileSystem": "containerinputfiles"
 					}
 				}
