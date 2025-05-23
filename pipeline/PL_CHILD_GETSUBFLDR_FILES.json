@@ -116,7 +116,7 @@
 			}
 		],
 		"parameters": {
-			"param_IN_CHILD_PL_FOR_FLDRS": {
+			"param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS": {
 				"type": "string"
 			}
 		},
