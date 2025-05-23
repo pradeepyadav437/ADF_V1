@@ -20,7 +20,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"param_FLDR_NAMES_FM_PARENT_PL": {
-								"value": "@pipeline().parameters.param_FLDR_NAMES_FM_PARENT_PL",
+								"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
 								"type": "Expression"
 							}
 						}
@@ -40,7 +40,7 @@
 			}
 		],
 		"parameters": {
-			"param_FLDR_NAMES_FM_PARENT_PL": {
+			"param_IN_CHILD_PL_FOR_FLDRS": {
 				"type": "string"
 			}
 		},
