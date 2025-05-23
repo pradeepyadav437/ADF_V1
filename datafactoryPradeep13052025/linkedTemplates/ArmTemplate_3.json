@@ -13,7 +13,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_PARAM_TEST_CPY_DYNAMIC_FLDRS')]",
+			"name": "[concat(parameters('factoryName'), '/PL_PARAM_Condition_Size_limit')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
