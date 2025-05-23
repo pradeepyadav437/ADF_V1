@@ -194,6 +194,14 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().param_FILENAME",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().param_FLDR_NAME",
+							"type": "Expression"
+						},
 						"fileSystem": "containerinputfiles"
 					}
 				}

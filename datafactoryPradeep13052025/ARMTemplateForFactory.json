@@ -95,7 +95,7 @@
 						}
 					},
 					{
-						"name": "ForEach1",
+						"name": "ForEach",
 						"type": "ForEach",
 						"dependsOn": [
 							{
@@ -108,7 +108,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('GMD_filenames').output.itemName",
+								"value": "@activity('GMD_filenames').output.childItems",
 								"type": "Expression"
 							},
 							"isSequential": true,
@@ -582,103 +582,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_FLATTEN_IP_ADLS')]",
 				"[concat(variables('factoryId'), '/datasets/DS_FLATTEN_OP_COPY_BEHAVIOUR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_GET_ONLY_FILES_IN_SUBFOLDERS')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "GetMD_folders",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "DS_PARENT_PL_GMD1_GET_FLDRS",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "BinaryReadSettings"
-							}
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "GetMD_folders",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('GetMD_folders').output.childItems",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "Exec_PL_CHILD_GETSUBFLDR_FILES",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"policy": {
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "PL_CHILD_GETSUBFLDR_FILES",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS": {
-												"value": "@item().name",
-												"type": "Expression"
-											}
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"VAR_ACROSS_PL_TO_GET_SUBFLDRS": {
-						"type": "Array"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_PARENT_PL_GMD1_GET_FLDRS')]",
-				"[concat(variables('factoryId'), '/pipelines/PL_CHILD_GETSUBFLDR_FILES')]"
 			]
 		},
 		{
@@ -1580,6 +1483,103 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_PARENT_GET_ONLY_FILES_IN_SUBFOLDERS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "GetMD_folders",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "DS_PARENT_PL_GMD1_GET_FLDRS",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "BinaryReadSettings"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "GetMD_folders",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('GetMD_folders').output.childItems",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Exec_PL_CHILD_GETSUBFLDR_FILES",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "PL_CHILD_GETSUBFLDR_FILES",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"VAR_ACROSS_PL_TO_GET_SUBFLDRS": {
+						"type": "Array"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_PARENT_PL_GMD1_GET_FLDRS')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_CHILD_GETSUBFLDR_FILES')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PL_PRESERVE_COPY')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2116,6 +2116,14 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().param_FILENAME",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().param_FLDR_NAME",
+							"type": "Expression"
+						},
 						"fileSystem": "containerinputfiles"
 					}
 				}

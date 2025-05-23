@@ -368,7 +368,7 @@
 						}
 					},
 					{
-						"name": "ForEach1",
+						"name": "ForEach",
 						"type": "ForEach",
 						"dependsOn": [
 							{
@@ -381,7 +381,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('GMD_filenames').output.itemName",
+								"value": "@activity('GMD_filenames').output.childItems",
 								"type": "Expression"
 							},
 							"isSequential": true,
