@@ -1,0 +1,17 @@
+{
+	"name": "DS_PARENT_PL_GMD1_GET_FLDRS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservices_ADLS_Gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "containerinputfiles"
+			}
+		}
+	}
+}

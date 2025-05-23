@@ -16,7 +16,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": {
-					"value": "FILE_LIST_IP_TASK3/@dataset().param_FLDR_NAMES_FM_PARENT_PL",
+					"value": "@dataset().param__DS_LEVEL_FLDR_NAMES_FM_PARENT_PL",
 					"type": "Expression"
 				},
 				"fileSystem": "containerinputfiles"

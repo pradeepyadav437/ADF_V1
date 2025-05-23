@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DS_FILE_LIST_IP_TASK3",
+						"referenceName": "DS_PARENT_PL_GMD1_GET_FLDRS",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
