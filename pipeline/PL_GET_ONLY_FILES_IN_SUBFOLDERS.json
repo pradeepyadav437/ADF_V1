@@ -77,11 +77,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"param_GET_SUB_FLDR_NAMES": {
-				"type": "string"
-			}
-		},
 		"variables": {
 			"VAR_ACROSS_PL_TO_GET_SUBFLDRS": {
 				"type": "Array"
