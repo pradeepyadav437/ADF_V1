@@ -302,7 +302,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"folderPath": {
-							"value": "@dataset().param_FLDR_NAMES_FM_PARENT_PL",
+							"value": "FILE_LIST_IP_TASK3/@dataset().param_FLDR_NAMES_FM_PARENT_PL",
 							"type": "Expression"
 						},
 						"fileSystem": "containerinputfiles"
