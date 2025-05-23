@@ -1,5 +1,5 @@
 {
-	"name": "PL_GET_ONLY_FILES_IN_SUBFOLDERS",
+	"name": "PL_PARENT_GET_ONLY_FILES_IN_SUBFOLDERS",
 	"properties": {
 		"activities": [
 			{
