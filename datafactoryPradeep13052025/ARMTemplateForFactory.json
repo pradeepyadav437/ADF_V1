@@ -2778,7 +2778,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "FILE_LIST_IP_TASK3",
 						"fileSystem": "containerinputfiles"
 					}
 				}
