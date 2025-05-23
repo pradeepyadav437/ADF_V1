@@ -412,8 +412,7 @@
 				},
 				"parameters": {
 					"param_IN_CHILD_PL_FOR_FLDRS": {
-						"type": "string",
-						"defaultValue": "1"
+						"type": "string"
 					}
 				},
 				"annotations": []
