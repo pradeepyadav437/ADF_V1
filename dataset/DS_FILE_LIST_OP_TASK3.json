@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"folderPath": "FILES_FM_SUBFOLDER",
 				"fileSystem": "containerinputfiles"
 			}
 		}
