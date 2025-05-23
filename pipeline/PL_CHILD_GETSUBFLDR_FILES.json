@@ -51,6 +51,7 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -75,6 +76,12 @@
 										"type": "BinaryReadSettings"
 									}
 								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
 								"enableStaging": false
 							},
 							"inputs": [
@@ -85,8 +92,18 @@
 										"param_FILENAME": {
 											"value": "@item().name",
 											"type": "Expression"
+										},
+										"param_FLDR_NAME": {
+											"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
+											"type": "Expression"
 										}
 									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_OP_SUBFOLDER_FILES_COPY",
+									"type": "DatasetReference"
 								}
 							]
 						}
