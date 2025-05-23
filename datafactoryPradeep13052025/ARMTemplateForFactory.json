@@ -53,6 +53,63 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_CHILD_GETSUBFLDR_FILES')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "GMD_filenames",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "DS_POINTING_TO_FILELIST_TASK3",
+								"type": "DatasetReference",
+								"parameters": {
+									"param_FLDR_NAMES_FM_PARENT_PL": {
+										"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
+										"type": "Expression"
+									}
+								}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "BinaryReadSettings"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"param_IN_CHILD_PL_FOR_FLDRS": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_POINTING_TO_FILELIST_TASK3')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PL_COPY_DATA_FROM_FILES_TO_TABLE')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -368,141 +425,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_FILE_LIST_TASK3')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "GMD_FILE_LIST_IP_TASK3",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "DS_POINTING_TO_FILELIST_TASK3",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "BinaryReadSettings"
-							}
-						}
-					},
-					{
-						"name": "ForEach_CHILD_ELEMENTS_TASK3",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "GMD_FILE_LIST_IP_TASK3",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('GMD_FILE_LIST_IP_TASK3').output.childItems",
-								"type": "Expression"
-							},
-							"isSequential": true,
-							"activities": [
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"state": "Inactive",
-									"onInactiveMarkAs": "Succeeded",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"ifTrueActivities": [
-											{
-												"name": "GetMetadata_D1",
-												"type": "GetMetadata",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"fieldList": []
-												}
-											}
-										]
-									}
-								},
-								{
-									"name": "GetMetadata_D1_copy1",
-									"type": "GetMetadata",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "DS_GET_MD_SUBFOLDERS",
-											"type": "DatasetReference",
-											"parameters": {}
-										},
-										"fieldList": [
-											"childItems"
-										],
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										},
-										"formatSettings": {
-											"type": "BinaryReadSettings"
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"PARAM_FOLDER_NAMES": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-05-16T05:41:27Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_POINTING_TO_FILELIST_TASK3')]",
-				"[concat(variables('factoryId'), '/datasets/DS_GET_MD_SUBFOLDERS')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/PL_FLATTEN_COPY')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -589,7 +511,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "GetMD_1",
+						"name": "GetMD_folders",
 						"type": "GetMetadata",
 						"dependsOn": [],
 						"policy": {
@@ -624,7 +546,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "GetMD_1",
+								"activity": "GetMD_folders",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -633,139 +555,30 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('GetMD_1').output.childItems",
+								"value": "@activity('GetMD_folders').output.childItems",
 								"type": "Expression"
 							},
 							"isSequential": true,
 							"activities": [
 								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"state": "Inactive",
-									"onInactiveMarkAs": "Succeeded",
-									"dependsOn": [
-										{
-											"activity": "GetMD_2",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@contains(item().name,'D')",
-											"type": "Expression"
-										},
-										"ifTrueActivities": [
-											{
-												"name": "Copy data1",
-												"type": "Copy",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"source": {
-														"type": "BinarySource",
-														"storeSettings": {
-															"type": "AzureBlobFSReadSettings",
-															"recursive": true
-														},
-														"formatSettings": {
-															"type": "BinaryReadSettings"
-														}
-													},
-													"sink": {
-														"type": "BinarySink",
-														"storeSettings": {
-															"type": "AzureBlobFSWriteSettings"
-														}
-													},
-													"enableStaging": false
-												},
-												"inputs": [
-													{
-														"referenceName": "DS_TAKING_IP_fm_FOR_EACH_USING_PARAM",
-														"type": "DatasetReference",
-														"parameters": {
-															"PARAM_OP_FM_IF_COND": {
-																"value": "@item().NAME",
-																"type": "Expression"
-															}
-														}
-													}
-												],
-												"outputs": [
-													{
-														"referenceName": "DS_FILE_LIST_OP_TASK3",
-														"type": "DatasetReference",
-														"parameters": {}
-													}
-												]
-											}
-										]
-									}
-								},
-								{
-									"name": "GetMD_2",
-									"type": "GetMetadata",
-									"state": "Inactive",
-									"onInactiveMarkAs": "Succeeded",
-									"dependsOn": [
-										{
-											"activity": "Set variable1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "DS_GETmd2_FOR_SUBFLDRS",
-											"type": "DatasetReference",
-											"parameters": {}
-										},
-										"fieldList": [
-											"childItems"
-										],
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										},
-										"formatSettings": {
-											"type": "BinaryReadSettings"
-										}
-									}
-								},
-								{
-									"name": "Set variable1",
-									"type": "SetVariable",
+									"name": "Exec_PL_CHILD_GETSUBFLDR_FILES",
+									"type": "ExecutePipeline",
 									"dependsOn": [],
 									"policy": {
-										"secureOutput": false,
 										"secureInput": false
 									},
 									"userProperties": [],
 									"typeProperties": {
-										"variableName": "VAR_ACROSS_PL_TO_GET_SUBFLDRS",
-										"value": {
-											"value": "@item().NAME",
-											"type": "Expression"
+										"pipeline": {
+											"referenceName": "PL_CHILD_GETSUBFLDR_FILES",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"param_IN_CHILD_PL_FOR_FLDRS": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
 										}
 									}
 								}
@@ -785,9 +598,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_FILE_LIST_IP_TASK3')]",
-				"[concat(variables('factoryId'), '/datasets/DS_GETmd2_FOR_SUBFLDRS')]",
-				"[concat(variables('factoryId'), '/datasets/DS_TAKING_IP_fm_FOR_EACH_USING_PARAM')]",
-				"[concat(variables('factoryId'), '/datasets/DS_FILE_LIST_OP_TASK3')]"
+				"[concat(variables('factoryId'), '/pipelines/PL_CHILD_GETSUBFLDR_FILES')]"
 			]
 		},
 		{
@@ -2823,6 +2634,11 @@
 				"linkedServiceName": {
 					"referenceName": "linkedservices_ADLS_Gen2",
 					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"param_FLDR_NAMES_FM_PARENT_PL": {
+						"type": "string"
+					}
 				},
 				"annotations": [],
 				"type": "Binary",

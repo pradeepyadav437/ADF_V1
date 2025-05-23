@@ -250,6 +250,11 @@
 					"referenceName": "linkedservices_ADLS_Gen2",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"param_FLDR_NAMES_FM_PARENT_PL": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Binary",
 				"typeProperties": {
