@@ -71,6 +71,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"param_FLDR_NAMES_FM_PARENT_PL": {
+				"type": "string"
+			}
+		},
 		"variables": {
 			"VAR_ACROSS_PL_TO_GET_SUBFLDRS": {
 				"type": "Array"

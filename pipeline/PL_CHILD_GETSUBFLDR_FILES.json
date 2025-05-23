@@ -17,7 +17,13 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DS_POINTING_TO_FILELIST_TASK3",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"param_FLDR_NAMES_FM_PARENT_PL": {
+								"value": "@pipeline().parameters.param_FLDR_NAMES_FM_PARENT_PL",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"childItems"
