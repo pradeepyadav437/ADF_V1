@@ -19,8 +19,8 @@
 						"referenceName": "DS_POINTING_TO_FILELIST_TASK3",
 						"type": "DatasetReference",
 						"parameters": {
-							"param_FLDR_NAMES_FM_PARENT_PL": {
-								"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
+							"param__DS_LEVEL_FLDR_NAMES_FM_PARENT_PL": {
+								"value": "@pipeline().parameters.param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS",
 								"type": "Expression"
 							}
 						}
@@ -52,7 +52,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('GMD_filenames').output.childItems",
+						"value": "@activity('GMD_filenames').output.itemName",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -98,7 +98,7 @@
 											"type": "Expression"
 										},
 										"param_FLDR_NAME": {
-											"value": "@pipeline().parameters.param_IN_CHILD_PL_FOR_FLDRS",
+											"value": "@pipeline().parameters.param_PL_LEVEL_IN_CHILD_PL_FOR_FLDRS",
 											"type": "Expression"
 										}
 									}
